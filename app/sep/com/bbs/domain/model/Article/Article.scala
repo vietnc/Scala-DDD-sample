@@ -1,4 +1,4 @@
-package sep.com.bbs.domain.model.Article
+package sep.com.bbs.domain.model.article
 
 import java.util.Date
 import sep.com.bbs.domain.shared._

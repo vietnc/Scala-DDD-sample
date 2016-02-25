@@ -10,21 +10,21 @@ abstract class ID extends ValueObject{
   }
 }
 
-final case class ArticleID(val guid: String) extends  ID{
+final case class ArticleID(val value: String) extends  ID{
 
   override def equals(x: Any): Boolean = {
     x match{
-      case ArticleID(id) => this.guid == id
+      case ArticleID(id) => this.value == id
       case _ => false
     }
   }
 }
 
-final case class UserID(val guid: String) extends  ID{
+final case class UserID(val value: String) extends  ID{
 
   override def equals(x: Any): Boolean = {
     x match{
-      case UserID(id) => this.guid == id
+      case UserID(id) => this.value == id
       case _ => false
     }
   }

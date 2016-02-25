@@ -1,4 +1,4 @@
-package sep.com.bbs.domain.model.Article
+package sep.com.bbs.domain.model.article
 
 import sep.com.bbs.domain.shared._
 
