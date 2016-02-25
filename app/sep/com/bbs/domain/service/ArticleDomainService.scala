@@ -15,13 +15,13 @@ object ArticleDomainService{
     Article(ArticleID(dto.id),
       dto.title,
       dto.content,
-      Author(dto.author),DateTime.getDate(dto.createdDate))
+      Author(dto.email),dto.createdDate)
   }
 
   def getDTO(ar: Article): ArticleDTO ={
     ArticleDTO(ar.id.value,
       ar.title, ar.content,
       ar.author.email,
-      DateTime.toString(ar.createdDate))
+      ar.createdDate)
   }
 }
