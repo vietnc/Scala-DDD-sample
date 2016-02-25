@@ -12,21 +12,3 @@ case class Article (id: ArticleID,
                     author: Author) extends Entity
 
 case class Author(email: String)
-
-/**
- * companion object for support functions
- */
-object Article{
-  def load(dto : ArticleDTO): Article ={
-    Article(ArticleID(dto.id),
-      dto.title,
-      dto.content,
-      Author(dto.author))
-  }
-
-  def getDTO(ar: Article): ArticleDTO={
-    ArticleDTO(ar.id.guid,
-      ar.title, ar.content,
-      ar.author.email)
-  }
-}

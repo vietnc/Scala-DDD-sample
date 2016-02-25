@@ -2,6 +2,7 @@ package sep.com.bbs.application.services
 
 import sep.com.bbs.domain.impl.ArticleRepository
 import sep.com.bbs.domain.model.Article.Article
+import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.infra.dto.ArticleDTO
 
 /**
@@ -10,7 +11,6 @@ import sep.com.bbs.infra.dto.ArticleDTO
 object ArticleService {
 
   def getListArticle():List[ArticleDTO] = {
-    val listArticle: List[Article] = ArticleRepository.findAll()
-    listArticle.map(ar => Article.getDTO(ar))
+    ArticleRepository.findAll().map(ar => ArticleDomainService.getDTO(ar))
   }
 }

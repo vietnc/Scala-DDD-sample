@@ -1,6 +1,7 @@
 package sep.com.bbs.domain.impl
 
 import sep.com.bbs.domain.model.Article.{Article, ArticleRepository}
+import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared._
 import sep.com.bbs.infra.ArticleDAO
 import sep.com.bbs.infra.dto.ArticleDTO
@@ -11,16 +12,14 @@ import sep.com.bbs.infra.dto.ArticleDTO
 
 object ArticleRepository extends ArticleRepository{
   def findById(id: ArticleID): Option[Article] = {
-    val articleInfo: ArticleDTO = ArticleDAO.findById("uniqueID")
-    Some(Article.load(articleInfo))
+    Some(ArticleDomainService.loadDTO(ArticleDAO.findById(id.guid)))
   }
 
   def findAll(): List[Article] = {
-    val articleInfoList = ArticleDAO.findAll()
-    articleInfoList.map(articleInfo => Article.load(articleInfo))
+    ArticleDAO.findAll().map(articleInfo => ArticleDomainService.loadDTO(articleInfo))
   }
 
   def store(article: Article) = {
-    ArticleDAO.save(Article.getDTO(article))
+    ArticleDAO.save(ArticleDomainService.getDTO(article))
   }
 }
