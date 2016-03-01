@@ -1,8 +1,7 @@
-package sep.com.bbs.domain.model.User
+package sep.com.bbs.domain.model.user
 
-import sep.com.bbs.domain.model.user.User
-import sep.com.bbs.domain.shared.{iRepository, UserID}
+import sep.com.bbs.domain.shared._
 
 trait UserRepository extends  iRepository[UserID, User] {
-  def findByEmail(email: String): Option[User]
+
 }

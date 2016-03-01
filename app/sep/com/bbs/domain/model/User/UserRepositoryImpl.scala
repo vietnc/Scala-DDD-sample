@@ -1,24 +1,26 @@
-package sep.com.bbs.domain.model.User
+package sep.com.bbs.domain.model.user
 
+import sep.com.bbs.domain.shared._
 import sep.com.bbs.domain.model.user.User
-import sep.com.bbs.domain.shared.UserID
+
+import scala.util.Try
 
 object UserRepositoryImpl extends UserRepository{
 
-    def findByEmail(email: String): Option[User] = {
-      None
+    def findByEmail(email: String): Try[Option[User]] = {
+      Try(None)
     }
 
-    def resolveById(id: UserID): Option[User] = {
-      None
+    def resolveById(id: UserID): Try[Option[User]] = {
+      Try(None)
 
     }
-    def resolveAll(): List[User] = {
-      List()
+    def resolveAll(): Try[List[User]] = {
+      Try(List())
     }
 
-    def store(user: User): Boolean = {
-      true
+    def store(user: User): Try[Boolean] = {
+      Try(true)
     }
 
 

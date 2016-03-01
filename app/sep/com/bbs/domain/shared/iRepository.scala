@@ -1,11 +1,13 @@
 package sep.com.bbs.domain.shared
 
+import scala.util.Try
+
 trait iRepository[V<: ID,U] {
 
-  def resolveById(id : V): Option[U]
+  def resolveById(id : V): Try[Option[U]]
 
-  def resolveAll(): List[U]
+  def resolveAll(): Try[List[U]]
 
-  def store(article: U): Boolean
+  def store(article: U): Try[Boolean]
 
 }

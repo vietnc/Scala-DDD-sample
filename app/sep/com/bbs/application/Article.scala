@@ -3,20 +3,19 @@ package sep.com.bbs.application
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import sep.com.bbs.application.services.ArticleService
-import sep.com.bbs.domain.shared._
-import sep.com.bbs.infra.dto._
-import sep.com.bbs.infra.util.DateTime
+import sep.com.bbs.domain.shared.ID
+import sep.com.bbs.infra.dto.ArticleDTO
 
-/**
-  *
-  */
+import sep.com.bbs.infra.util.{DateTime}
+
+
 object Article  extends Controller{
 
-  def list() = Action{request =>
-
-    val articles = ArticleService.getListArticle()
-    Ok(Json.toJson(articles))
-  }
+  def list() = Action{
+    request =>
+      val articles = ArticleService.getListArticle()
+      Ok(Json.toJson(articles))
+    }
 
   def getById(id: String) = Action{
     request =>
@@ -24,16 +23,10 @@ object Article  extends Controller{
       Ok(Json.toJson(article))
   }
 
-  def saveArticle() = Action{
+  def saveArticle = Action{
     request =>
       val dto = ArticleDTO(
-        ID.createUID(),
-        "title",
-        "content",
-        "author",
-        DateTime.getDate().toString)
-
-    Ok(Json.toJson(ArticleService.saveArticle(dto)))
-
+        ID.createUID(), "title", "content", "author", DateTime.getDate().toString)
+      Ok(Json.toJson(ArticleService.saveArticle(dto)))
   }
 }
