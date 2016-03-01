@@ -6,7 +6,7 @@ import sep.com.bbs.domain.shared.ArticleID
 import sep.com.bbs.infra.dto.ArticleDTO
 
 /**
- * fulfill Business use cases
+ * communicate with Domain layer
  */
 object ArticleService {
 
