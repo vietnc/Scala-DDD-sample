@@ -20,4 +20,7 @@ object ArticleService {
       case _ => None
     }
   }
+  def saveArticle(dto: ArticleDTO) : Boolean = {
+    ArticleRepositoryImpl.store(ArticleDomainService.loadDTO(dto))
+  }
 }

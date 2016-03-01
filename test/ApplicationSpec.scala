@@ -13,14 +13,21 @@ import play.api.test.Helpers._
 @RunWith(classOf[JUnitRunner])
 class ApplicationSpec extends Specification {
 
-  "Application" should {
+  "BBS" should {
 
     "send 404 on a bad request" in new WithApplication{
       route(FakeRequest(GET, "/boum")) must beNone
     }
 
-    "render the index page" in new WithApplication{
-      val home = route(FakeRequest(GET, "/")).get
+    "show list article for common users" in new WithApplication{
+      val home = route(FakeRequest(GET, "/article")).get
+
+      status(home) must equalTo(OK)
+      contentType(home) must beSome.which(_ == "text/html")
+      contentAsString(home) must contain ("Your new application is ready.")
+    }
+    "view detail article with mail of post creator" in new WithApplication{
+      val home = route(FakeRequest(GET, "/article")).get
 
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")

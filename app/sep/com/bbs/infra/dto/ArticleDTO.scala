@@ -1,6 +1,5 @@
 package sep.com.bbs.infra.dto
-
-import org.joda.time.DateTime
+import sep.com.bbs.infra.util.DateTime
 import play.api.libs.json.{Json, JsValue}
 import scalikejdbc._
 
@@ -10,7 +9,7 @@ case class ArticleDTO(
    title: String,
    content: String,
    email: String,
-   createdDate: DateTime
+   createdDate: String
  )
 /**
   * companion object to parse json
@@ -32,7 +31,7 @@ object ArticleTable extends SQLSyntaxSupport[ArticleDTO] {
       rs.string(a.title),
       rs.string(a.content),
       rs.string(a.email),
-      rs.jodaDateTime(a.createdDate)
+      rs.string(a.createdDate)
     )
   }
 }

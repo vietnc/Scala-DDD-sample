@@ -1,5 +1,6 @@
 package sep.com.bbs.infra
 
+import play.api.Logger
 import scalikejdbc._
 import sep.com.bbs.infra.dto.{ArticleTable, ArticleDTO}
 
@@ -25,9 +26,25 @@ object ArticleDAO {
     }.map(ArticleTable(a.resultName)).list().apply()
   }
 
-    def save(articleDTO: ArticleDTO) ={
-      //save
+  def save(dto: ArticleDTO): Boolean ={
+    try{
+    withSQL {
+      insert
+        .into(ArticleTable).namedValues(
+        a.column("id") -> dto.id,
+        a.column("title") -> dto.title,
+        a.column("content") -> dto.content,
+        a.column("email") -> dto.email,
+        a.column("created_date") -> dto.createdDate
+      )
+    }.update.apply()
+    true
+    }catch {
+      case e: Exception => Logger.error("[SQLException][ArticleDAO.save]: " + e.getMessage)
+        false
     }
+  }
+
 }
 
 

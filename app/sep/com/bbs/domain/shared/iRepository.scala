@@ -6,6 +6,6 @@ trait iRepository[V<: ID,U] {
 
   def resolveAll(): List[U]
 
-  def store(article: U)
+  def store(article: U): Boolean
 
 }

@@ -18,7 +18,7 @@ object ArticleRepositoryImpl extends ArticleRepository{
     ArticleDAO.findAll().map(articleInfo => ArticleDomainService.loadDTO(articleInfo))
   }
 
-  def store(article: Article) = {
+  def store(article: Article): Boolean = {
     ArticleDAO.save(ArticleDomainService.getDTO(article))
   }
 }

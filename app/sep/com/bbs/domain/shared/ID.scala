@@ -4,7 +4,9 @@ import java.util.UUID
 
 abstract class ID extends ValueObject{
   def equals(other: Any): Boolean
+}
 
+object ID{
   def createUID(): String = {
     UUID.randomUUID().toString
   }
