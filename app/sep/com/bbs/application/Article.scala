@@ -5,17 +5,17 @@ import play.api.mvc.{Action, Controller}
 import sep.com.bbs.application.services.ArticleService
 import sep.com.bbs.domain.shared.ID
 import sep.com.bbs.infra.dto.ArticleDTO
-
 import sep.com.bbs.infra.util.{DateTime}
 
 
 object Article  extends Controller{
 
-  def list() = Action{
+  def getAll() = Action{
     request =>
       val articles = ArticleService.getListArticle()
       Ok(Json.toJson(articles))
     }
+
 
   def getById(id: String) = Action{
     request =>

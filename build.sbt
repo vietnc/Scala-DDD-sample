@@ -8,15 +8,21 @@ scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   jdbc,
-  "org.scalikejdbc" %% "scalikejdbc" % "2.2.9",
-  "org.scalikejdbc" %% "scalikejdbc-test" % "2.2.9" % "test",
-  "mysql" % "mysql-connector-java" % "5.1.24",
   cache,
-  "com.typesafe.play" %% "play-mailer" % "3.0.1",
-  "com.github.tototoshi" %% "play-flyway" % "1.2.0",
-  "org.scalikejdbc" %% "scalikejdbc-config" % "2.2.9",
-  "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.2",
-  ws
+  ws,
+  specs2 % Test,
+  evolutions,
+  "mysql" % "mysql-connector-java" % "5.1.37",
+  "org.scalikejdbc" %% "scalikejdbc" % "2.3.2",
+  "org.scalikejdbc" %% "scalikejdbc-config" % "2.3.2",
+  "org.scalikejdbc" %% "scalikejdbc-play-initializer" % "2.4.3",
+  "org.scalikejdbc" %% "scalikejdbc-play-fixture" % "2.4.1",
+  "org.scalikejdbc" %% "scalikejdbc-test" % "2.3.5" % "test",
+  "org.scalikejdbc" %% "scalikejdbc-play-dbapi-adapter" % "2.4.0",
+  "com.h2database" % "h2" % "1.4.191",
+  "ch.qos.logback" % "logback-classic" % "1.1.3"
 )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+routesGenerator := InjectedRoutesGenerator
+
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/evolutions/test" )
