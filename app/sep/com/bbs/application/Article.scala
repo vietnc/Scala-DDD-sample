@@ -10,10 +10,10 @@ import sep.com.bbs.infra.util.DateTime
 /**
   *
   */
-object Article  extends Controller{
+class Article  extends Controller{
 
-  def list() = Action{request =>
 
+  def getAll() = Action{request =>
     val articles = ArticleService.getListArticle()
     Ok(Json.toJson(articles))
   }
