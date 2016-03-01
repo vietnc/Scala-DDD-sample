@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import sep.com.bbs.domain.shared._
 
 /**
- * article domain
+ * article model
  */
 case class Article (id: ArticleID,
                     title: String,
