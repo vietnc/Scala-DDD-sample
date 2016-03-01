@@ -5,7 +5,8 @@
     <div ng-controller="ArticleCtrl">
         <div ng-init="init()">
             <div ng-repeat="article in articles">
-                <div>{{article.title}}</div>
+                <div><a href="/article/view/{{article.id}}">{{article.title}}</a></div>
+                <div>Author: {{article.email}}</div>
                 <div>{{article.content}}</div>
             </div>
         </div>

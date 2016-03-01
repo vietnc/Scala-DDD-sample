@@ -17,17 +17,21 @@ repository.factory('ArticleRepo', function ($resource, Article) {
         return $resource('/article')
             .query()
             .$promise
-            .then(function(res){ return repo.toList(res, toArticle)});
+            .then(
+                function(res){ return repo.toList(res, toArticle)}
+            );
     };
 
     repo.getById = function(id) {
         return $resource('/article/' + id)
-            .query()
+            .get()
             .$promise
-            .then(function(res){ return toArticle(res)},
+            .then(
+                function(res){ return toArticle(res)},
                 function(e) {console.log(123)}
             );
     };
+    //$resource('anken/:id', {id: id}, {'update': {method: 'PUT', isArray: false}})
 
     return repo;
 });
