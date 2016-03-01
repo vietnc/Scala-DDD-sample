@@ -9,9 +9,9 @@ import sep.com.bbs.domain.service.ArticleDomainService
 /**
   *
   */
-object Article  extends Controller{
+class Article  extends Controller{
 
-  def viewArticle() = Action{request =>
+  def getAll() = Action{request =>
     val articles = ArticleService.getListArticle()
     Ok(Json.toJson(articles))
   }
