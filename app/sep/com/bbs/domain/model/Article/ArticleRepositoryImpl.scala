@@ -4,11 +4,8 @@ import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared._
 import sep.com.bbs.infra.ArticleDAO
 
-/**
- * Created by Viet on 2/24/2016.
- */
-
 object ArticleRepositoryImpl extends ArticleRepository{
+
   def resolveById(id: ArticleID): Option[Article] = {
     ArticleDAO.findById(id.value) match {
       case Some(dto) => Some(ArticleDomainService.loadDTO(dto))

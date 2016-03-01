@@ -4,9 +4,7 @@ import org.joda.time.DateTime
 import play.api.libs.json.{Json, JsValue}
 import scalikejdbc._
 
-/**
- * Created by Viet on 2/24/2016.
- */
+
 case class ArticleDTO(
    id: String,
    title: String,
@@ -14,13 +12,17 @@ case class ArticleDTO(
    email: String,
    createdDate: DateTime
  )
-
+/**
+  * companion object to parse json
+  */
 object ArticleDTO {
   implicit val articleDTOWrites = Json.writes[ArticleDTO]
   implicit val articleDTOReads = Json.reads[ArticleDTO]
 }
 
-
+/**
+  * db table
+  */
 object ArticleTable extends SQLSyntaxSupport[ArticleDTO] {
   override val tableName = "article"
 

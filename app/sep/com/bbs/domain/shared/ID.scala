@@ -10,6 +10,7 @@ abstract class ID extends ValueObject{
   }
 }
 
+//ArticleID
 final case class ArticleID(val value: String) extends  ID{
 
   override def equals(x: Any): Boolean = {
@@ -20,6 +21,7 @@ final case class ArticleID(val value: String) extends  ID{
   }
 }
 
+//UserID
 final case class UserID(val value: String) extends  ID{
 
   override def equals(x: Any): Boolean = {
