@@ -9,4 +9,8 @@ object HtmlController extends Controller{
     Ok(views.html.article.list())
   }
 
+  def viewArticle(id: String): Action[AnyContent] = Action{
+    Ok(views.html.article.detail(id))
+  }
+
 }

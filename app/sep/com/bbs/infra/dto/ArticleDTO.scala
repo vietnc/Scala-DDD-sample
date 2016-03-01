@@ -1,6 +1,7 @@
 package sep.com.bbs.infra.dto
 
 import org.joda.time.DateTime
+import play.api.libs.json.{Json, JsValue}
 import scalikejdbc._
 
 /**
@@ -13,6 +14,12 @@ case class ArticleDTO(
    email: String,
    createdDate: DateTime
  )
+
+object ArticleDTO {
+  implicit val articleDTOWrites = Json.writes[ArticleDTO]
+  implicit val articleDTOReads = Json.reads[ArticleDTO]
+}
+
 
 object ArticleTable extends SQLSyntaxSupport[ArticleDTO] {
   override val tableName = "article"

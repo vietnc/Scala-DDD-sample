@@ -20,5 +20,14 @@ repository.factory('ArticleRepo', function ($resource, Article) {
             .then(function(res){ return repo.toList(res, toArticle)});
     };
 
+    repo.getById = function(id) {
+        return $resource('/article/' + id)
+            .query()
+            .$promise
+            .then(function(res){ return toArticle(res)},
+                function(e) {console.log(123)}
+            );
+    };
+
     return repo;
 });
