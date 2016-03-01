@@ -26,7 +26,7 @@ object ArticleDAO {
     }.map(ArticleTable(a.resultName)).list().apply()
   }
 
-  def save(dto: ArticleDTO): Boolean ={
+  def save(dto: ArticleDTO)(implicit session: DBSession = AutoSession): Boolean ={
     try{
     withSQL {
       insert
