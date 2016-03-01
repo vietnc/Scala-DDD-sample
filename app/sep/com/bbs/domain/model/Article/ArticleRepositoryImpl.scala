@@ -10,7 +10,11 @@ import sep.com.bbs.infra.ArticleDAO
 
 object ArticleRepositoryImpl extends ArticleRepository{
   def resolveById(id: ArticleID): Option[Article] = {
-    Some(ArticleDomainService.loadDTO(ArticleDAO.findById(id.value)))
+    ArticleDAO.findById(id.value) match {
+      case Some(dto) => Some(ArticleDomainService.loadDTO(dto))
+      case _ => None
+    }
+
   }
 
   def resolveAll(): List[Article] = {

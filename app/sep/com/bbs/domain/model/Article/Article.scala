@@ -1,6 +1,6 @@
 package sep.com.bbs.domain.model.article
 
-import java.util.Date
+import org.joda.time.DateTime
 import sep.com.bbs.domain.shared._
 
 /**
@@ -10,6 +10,6 @@ case class Article (id: ArticleID,
                     title: String,
                     content: String,
                     author: Author,
-                    createdDate:Date ) extends Entity
+                    createdDate:DateTime ) extends Entity
 
 case class Author(email: String)

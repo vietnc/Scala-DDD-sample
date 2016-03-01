@@ -19,11 +19,11 @@ object ArticleTable extends SQLSyntaxSupport[ArticleDTO] {
 
   def apply(a: ResultName[ArticleDTO])(rs: WrappedResultSet): ArticleDTO = {
     ArticleDTO(
-      id = rs.string(a.id),
-      title = rs.string(a.title),
-      content = rs.string(a.content),
-      email = rs.string(a.email),
-      createdDate = rs.jodaDateTime(a.createdDate)
+      rs.string(a.id),
+      rs.string(a.title),
+      rs.string(a.content),
+      rs.string(a.email),
+      rs.jodaDateTime(a.createdDate)
     )
   }
 }

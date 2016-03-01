@@ -1,0 +1,13 @@
+@main("BBS") {
+    <script src="@routes.Assets.at("javascripts/app/controllers/ArticleCtrl.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/app/repositories/ArticleRepository.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/app/models/Article.js")" type="text/javascript"></script>
+    <div ng-controller="ArticleCtrl">
+        <div ng-init="init()">
+            <div ng-repeat="article in articles">
+                <div>{{article.title}}</div>
+                <div>{{article.content}}</div>
+            </div>
+        </div>
+    </div>
+}
