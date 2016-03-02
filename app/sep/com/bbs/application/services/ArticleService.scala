@@ -16,16 +16,11 @@ import scala.util.{Try, Success, Failure}
 class ArticleService @Inject()(articleRepo: ArticleRepository) {
 
   def getListArticle():Try[List[ArticleDTO]] = {
-    articleRepo.resolveAll().map(
-      listArticles => listArticles.map(ar => ArticleDomainService.getDTO(ar)))
+    articleRepo.resolveAll().map(_.map(ArticleDomainService.getDTO))
   }
 
   def viewArticle(id: String):Try[Option[ArticleDTO]] = {
-    articleRepo.resolveById(ArticleID(id)).map(
-      ar =>  ar match{
-        case Some(article: Article) =>Some(ArticleDomainService.getDTO(article))
-        case None => None
-    })
+    articleRepo.resolveById(ArticleID(id)).map(_.map(ArticleDomainService.getDTO))
   }
 
   def saveArticle(dto: ArticleDTO) : Try[Boolean] = {

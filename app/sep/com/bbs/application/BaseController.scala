@@ -9,9 +9,9 @@ import scala.util.parsing.json.JSONObject
 
 trait BaseController extends Controller with AuthService{
 
-  def notFoundException(fName: String, e: Throwable) = {
-    BbsLog.debug(s"[Exception][{fName}] failed:" +  e.getMessage )
-    NotFound(JSONObject(Map("exception" -> e.getMessage)).toString())
+  def notFoundException(fName: String, msg: String) = {
+    BbsLog.debug(s"[Warning][{fName}] not found:" +  msg)
+    NotFound(JSONObject(Map("error" -> msg)).toString())
   }
 
   def internalServerError(fName: String, e: Throwable) = {

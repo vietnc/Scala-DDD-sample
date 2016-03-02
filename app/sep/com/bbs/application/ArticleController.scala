@@ -15,8 +15,7 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
 
   def list() = Action{
     request =>
-      articleService.getListArticle()
-      match{
+      articleService.getListArticle() match{
         case Success(listDTO) => Ok(Json.toJson(listDTO))
         case Failure(e) =>
           internalServerError("Article.list", e)
@@ -26,11 +25,11 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
 
   def getById(id: String) = Action{
     request =>
-      articleService.viewArticle(id)
-      match{
-        case Success(articleDTO) =>Ok(Json.toJson(articleDTO))
+      articleService.viewArticle(id) match{
+        case Success(Some(articleDTO)) => Ok(Json.toJson(articleDTO))
+        case Success(None) => notFoundException(s"Article.getById({id})", "no result for this ID")
         case Failure(e) =>
-          notFoundException(s"Article.getById({id})", e)
+          internalServerError(s"Article.getById({id})", e)
       }
 
   }
