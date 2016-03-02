@@ -5,8 +5,7 @@ import sep.com.bbs.domain.shared._
 import sep.com.bbs.infra.ArticleDAO
 
 import scala.util.Try
-
-object ArticleRepositoryImpl extends ArticleRepository{
+class ArticleRepositoryImpl extends ArticleRepository{
 
   def resolveById(id: ArticleID): Try[Option[Article]] = {
     Try(

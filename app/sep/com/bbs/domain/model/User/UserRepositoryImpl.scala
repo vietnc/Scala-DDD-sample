@@ -1,11 +1,9 @@
 package sep.com.bbs.domain.model.user
 
 import sep.com.bbs.domain.shared._
-import sep.com.bbs.domain.model.user.User
 
 import scala.util.Try
-
-object UserRepositoryImpl extends UserRepository{
+class UserRepositoryImpl extends UserRepository{
 
     def findByEmail(email: String): Try[Option[User]] = {
       Try(None)
