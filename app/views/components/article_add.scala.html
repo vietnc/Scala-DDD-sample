@@ -1,7 +1,7 @@
 <!-- Modal Article Add form-->
 <div class="modal fade" id="addArticleModal" role="dialog">
   <div class="modal-dialog" >
-    <form class="AddForm" ng-submit="createAticle()">
+    <form class="AddForm" ng-submit="createAticle()" data-toggle="validator">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -10,12 +10,15 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="usr">Title:</label>
-            <input type="text" class="form-control" id="title" ng-model="AddForm.title">
+            <input type="text" class="form-control" id="title" ng-model="AddForm.title"  placeholder="Article Tile" required/>
           </div>
           <div class="form-group">
-            <label for="pwd">Content:</label>
-            <textarea class="form-control" rows="5" id="content"  ng-model="AddForm.content"></textarea>
+            <textarea class="form-control" rows="5" id="content"  ng-model="AddForm.content"  placeholder="Article Content" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Poster Email</label>
+            <input class="form-control" type="email" id="email"  ng-model="AddForm.email" placeholder="Email" data-error="The email address is invalid" required/>
+            <div class="help-block with-errors"></div>
           </div>
         </div>
         <div class="modal-footer">

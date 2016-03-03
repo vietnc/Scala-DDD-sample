@@ -30,7 +30,7 @@ application.controller('ArticleCtrl',
                 id: 0,
                 title: $scope.AddForm.title == undefined ? "" : $scope.AddForm.title,
                 content: $scope.AddForm.content == undefined ? "" : $scope.AddForm.content,
-                email: "vietngc@gmail.com", //todo later
+                email: $scope.AddForm.email == undefined ? "" : $scope.AddForm.email,
                 createdDate: 0
             }
             ArticleRepo.store(articleRequest).then(
