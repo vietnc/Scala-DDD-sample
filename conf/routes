@@ -3,8 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.HtmlController.showArticleListScreen
-GET     /article/view/:id           controllers.HtmlController.viewArticle(id: String)
+GET     /                           @controllers.HtmlController.showArticleListScreen
+GET     /article/view/:id           @controllers.HtmlController.viewArticle(id: String)
 
 GET     /article                    @sep.com.bbs.application.ArticleController.list()
 GET     /article/:id                @sep.com.bbs.application.ArticleController.getById(id: String)

@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc._
 
-object HtmlController extends Controller{
+class HtmlController extends Controller{
 
   def showArticleListScreen: Action[AnyContent] = Action{
     Ok(views.html.article.list())

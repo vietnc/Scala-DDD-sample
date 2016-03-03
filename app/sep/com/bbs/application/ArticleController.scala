@@ -4,12 +4,17 @@ import javax.inject.Inject
 
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
+import sep.com.bbs.application.forms.ArticleForm
 import sep.com.bbs.application.services.ArticleService
 import sep.com.bbs.domain.shared.ID
 import sep.com.bbs.infra.dto.ArticleDTO
 import sep.com.bbs.infra.util.{BbsLog, DateTime}
 
 import scala.util.{Success,Failure}
+
+import play.api.data._
+import play.api.data.Forms._
+
 
 class ArticleController @Inject() (articleService: ArticleService)  extends BaseController{
 
@@ -35,17 +40,28 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
   }
 
   def saveArticle = Action{
-    request =>
-      //todo: extract from request
-      val dto = ArticleDTO(
-        ID.createUID(), "title", "content", "author", DateTime.getDate().toString)
+    implicit request =>
 
-    articleService.saveArticle(dto)
-    match{
-        case Success(isOk) => Ok(Json.toJson(isOk))
-        case Failure(e) =>
-          internalServerError("saveArticle", e)
-      }
+      ArticleForm.form.bindFromRequest.fold(
+        formWithErrors => {
+          // binding failure
+          BbsLog.error("Form Binding for saveArticle:" + formWithErrors)
+          Ok(Json.toJson(-1))
+        },
+        articleData => {
+          // binding success, you get the actual value. */
+          val dto = ArticleDTO(
+            ID.createUID(),articleData.title, articleData.content, articleData.email , DateTime.toString(DateTime.getDate()))
+
+          articleService.saveArticle(dto)
+          match{
+            case Success(isOk) => Ok(Json.toJson(isOk))
+            case Failure(e) =>
+              internalServerError("saveArticle", e)
+          }
+        }
+      )
+
   }
 
 }

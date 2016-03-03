@@ -27,15 +27,16 @@ object ArticleDAO {
   }
 
   def save(dto: ArticleDTO)(implicit session: DBSession = AutoSession): Boolean ={
+    val column = ArticleTable.column
     try{
     withSQL {
       insert
         .into(ArticleTable).namedValues(
-        a.column("id") -> dto.id,
-        a.column("title") -> dto.title,
-        a.column("content") -> dto.content,
-        a.column("email") -> dto.email,
-        a.column("created_date") -> dto.createdDate
+        column.id -> dto.id,
+        column.title -> dto.title,
+        column.content -> dto.content,
+        column.email -> dto.email,
+        column.createdDate -> dto.createdDate
       )
     }.update.apply()
     true
