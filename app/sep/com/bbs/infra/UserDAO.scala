@@ -2,7 +2,7 @@ package sep.com.bbs.infra
 
 import play.api.Logger
 import scalikejdbc._
-import sep.com.bbs.infra.dto.{UserDTO, UserTable, ArticleDTO, ArticleTable}
+import sep.com.bbs.infra.dto.{ArticleTable, ArticleDTO, UserDTO, UserTable}
 
 object UserDAO {
 

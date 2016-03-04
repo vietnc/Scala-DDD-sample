@@ -11,8 +11,8 @@ trait TestDBHelper {
   private val dbConfig = Map(
     "driver" -> "com.mysql.jdbc.Driver",
     "url" -> dbUrl,
-    "username" -> "test",
-    "password" -> "testpassword"
+    "username" -> "root",
+    "password" -> ""
   )
 
   val testDb = Databases(

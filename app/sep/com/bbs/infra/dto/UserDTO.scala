@@ -1,5 +1,5 @@
 package sep.com.bbs.infra.dto
-import sep.com.bbs.infra.util.DateTime
+
 import play.api.libs.json.{Json, JsValue}
 import scalikejdbc._
 

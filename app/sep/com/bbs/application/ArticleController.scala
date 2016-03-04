@@ -8,7 +8,7 @@ import sep.com.bbs.application.forms.ArticleForm
 import sep.com.bbs.application.services.ArticleService
 import sep.com.bbs.domain.shared.ID
 import sep.com.bbs.infra.dto.ArticleDTO
-import sep.com.bbs.infra.util.{BbsLog, DateTime}
+import sep.com.bbs.infra.util._
 
 import scala.util.{Success,Failure}
 
@@ -26,7 +26,6 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
           internalServerError("Article.list", e)
       }
     }
-
 
   def getById(id: String) = Action{
     request =>
@@ -46,7 +45,7 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
         formWithErrors => {
           // binding failure
           BbsLog.error("Form Binding for saveArticle:" + formWithErrors)
-          Ok(Json.toJson(-1))
+          BadRequest("fail to binding with form, please try to validate your input")
         },
         articleData => {
           // binding success, you get the actual value. */

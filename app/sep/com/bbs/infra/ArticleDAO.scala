@@ -1,13 +1,16 @@
 package sep.com.bbs.infra
 
+import javax.inject._
+
 import play.api.Logger
 import scalikejdbc._
-import sep.com.bbs.infra.dto.{ArticleTable, ArticleDTO}
+import sep.com.bbs.infra.dto.{ArticleDTO, ArticleTable}
 
-/**
- * Created by Viet on 2/24/2016.
- */
-object ArticleDAO {
+@Singleton
+case class ArticleDAO @Inject()(){
+
+  // ad-hoc session provider on the REPL
+  implicit val session = AutoSession
 
   private val a = ArticleTable.syntax("a")
 

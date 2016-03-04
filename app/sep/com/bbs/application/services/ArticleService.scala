@@ -8,7 +8,6 @@ import sep.com.bbs.domain.model.article._
 import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared.ArticleID
 import sep.com.bbs.infra.dto.ArticleDTO
-import sep.com.bbs.infra.util.BbsLog
 import scala.util.{Try, Success, Failure}
 /**
  * communicate with Domain layer

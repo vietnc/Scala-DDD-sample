@@ -1,24 +1,27 @@
 package sep.com.bbs.domain.model.article
 
+import javax.inject._
+
 import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared._
 import sep.com.bbs.infra.ArticleDAO
 
 import scala.util.Try
-class ArticleRepositoryImpl extends ArticleRepository{
+@Singleton
+class ArticleRepositoryImpl @Inject()(articleDAO: ArticleDAO) extends ArticleRepository{
 
   def resolveById(id: ArticleID): Try[Option[Article]] = Try {
-      ArticleDAO.findById(id.value) match {
+    articleDAO.findById(id.value) match {
       case Some(dto) => Some(ArticleDomainService.loadDTO(dto))
       case _ => None
     }
   }
 
   def resolveAll(): Try[List[Article]] = Try {
-      ArticleDAO.findAll().map(articleInfo => ArticleDomainService.loadDTO(articleInfo))
+    articleDAO.findAll().map(articleInfo => ArticleDomainService.loadDTO(articleInfo))
   }
 
   def store(article: Article): Try[Boolean] = Try {
-      ArticleDAO.save(ArticleDomainService.getDTO(article))
+    articleDAO.save(ArticleDomainService.getDTO(article))
   }
 }
