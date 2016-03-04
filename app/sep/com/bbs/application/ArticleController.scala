@@ -52,8 +52,7 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
           val dto = ArticleDTO(
             ID.createUID(),articleData.title, articleData.content, articleData.email , DateTime.toString(DateTime.getDate()))
 
-          articleService.saveArticle(dto)
-          match{
+          articleService.saveArticle(dto) match{
             case Success(isOk) => Ok(Json.toJson(isOk))
             case Failure(e) =>
               internalServerError("saveArticle", e)
