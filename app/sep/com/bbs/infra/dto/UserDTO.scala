@@ -7,15 +7,15 @@ import scalikejdbc._
 case class UserDTO(
                    id: String,
                    email: String,
-                   password: String
+                   password: String //hashed
                  )
 
 /**
   * companion object to parse json
   */
 object UserDTO {
-  implicit val articleDTOWrites = Json.writes[UserDTO]
-  implicit val articleDTOReads = Json.reads[UserDTO]
+  implicit val userDTOWrites = Json.writes[UserDTO]
+  implicit val userDTOReads = Json.reads[UserDTO]
 }
 
 /**

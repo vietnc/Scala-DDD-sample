@@ -10,10 +10,7 @@ import scala.util.Try
 class UserRepositoryImpl @Inject()(userDAO: UserDAO)extends UserRepository{
 
     def findByEmail(email: String): Try[Option[User]] = Try {
-      userDAO.findByEmail(email)  match {
-        case Some(dto) => Some(UserDomainService.loadDTO(dto))
-        case _ => None
-      }
+      userDAO.findByEmail(email).map(UserDomainService.loadDTO)
     }
 
     def resolveById(id: UserID): Try[Option[User]] = Try {

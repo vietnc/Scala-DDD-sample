@@ -27,12 +27,11 @@ class UserController @Inject()(authService: AuthService)  extends BaseController
       loginData => {
         // binding success
         authService.validate(loginData.email, loginData.password) match{
-          case Success(Some(isOk)) =>
-            if(isOk) Ok("Login successful").withSession("email" -> loginData.email)
-            else {
+          case Success(Some(true)) =>
+            Ok("Login successful").withSession("email" -> loginData.email)
+          case Success(Some(false)) =>
               BbsLog.debug(s"[Warning] password failed with ($loginData.email,$loginData.password) ")
               Unauthorized
-            }
           case Success(None) =>
             //email is not existed
             Unauthorized
