@@ -19,7 +19,7 @@ class ArticleControllerSpec extends PlaySpecification with FakeAppHelper with Re
         val result = call(controller.list, request)
         status(result) must beEqualTo(OK)
         contentType(result) must beSome("application/json")
-        (contentAsJson(result) \\ "id").length > 1
+        (contentAsJson(result)  \\ "id").length > 1
       }
       "getById(correctId) -with correct id should  return article content, email of post creator" in new WithApplication(fakeApp) {
 

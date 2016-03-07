@@ -6,15 +6,16 @@ import scalikejdbc._
 
 case class UserDTO(
                    id: String,
-                   email: String
+                   email: String,
+                   password: String
                  )
 
 /**
   * companion object to parse json
   */
 object UserDTO {
-  implicit val articleDTOWrites = Json.writes[ArticleDTO]
-  implicit val articleDTOReads = Json.reads[ArticleDTO]
+  implicit val articleDTOWrites = Json.writes[UserDTO]
+  implicit val articleDTOReads = Json.reads[UserDTO]
 }
 
 /**
@@ -26,7 +27,8 @@ object UserTable extends SQLSyntaxSupport[UserDTO] {
   def apply(a: ResultName[UserDTO])(rs: WrappedResultSet): UserDTO = {
     UserDTO(
       rs.string(a.id),
-      rs.string(a.email)
+      rs.string(a.email),
+      rs.string(a.password)
     )
   }
 }

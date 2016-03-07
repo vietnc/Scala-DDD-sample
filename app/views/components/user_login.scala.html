@@ -1,0 +1,29 @@
+<script src="@routes.Assets.at("javascripts/app/controllers/UserCtrl.js")" type="text/javascript"></script>
+
+<!-- Modal UserLogin form-->
+<div class="modal fade" id="loginUserModal" role="dialog">
+  <div class="modal-dialog" ng-controller="UserCtrl">
+    <form class="LoginForm"  method="POST" data-toggle="validator">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">User Login</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required/>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="password" name="password" id="password" placeholder="Password" required/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p> Forgot password? click <a href="#" >here</a>  | Don't have account? <a href="#">sign in</a> </p>
+          <button type="submit" value="SUBMIT"  class="btn btn-primary" data-dismiss="modal" ng-click="summitLogin()">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
