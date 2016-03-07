@@ -1,13 +1,16 @@
 package sep.com.bbs.infra
 
+import javax.inject._
+
 import play.api.Logger
 import scalikejdbc._
-import sep.com.bbs.infra.dto.{ArticleTable, ArticleDTO}
+import sep.com.bbs.infra.dto.{ArticleDTO, ArticleTable}
 
-/**
- * Created by Viet on 2/24/2016.
- */
-object ArticleDAO {
+@Singleton
+case class ArticleDAO @Inject()(){
+
+  // ad-hoc session provider on the REPL
+  implicit val session = AutoSession
 
   private val a = ArticleTable.syntax("a")
 
@@ -26,16 +29,17 @@ object ArticleDAO {
     }.map(ArticleTable(a.resultName)).list().apply()
   }
 
-  def save(dto: ArticleDTO): Boolean ={
+  def save(dto: ArticleDTO)(implicit session: DBSession = AutoSession): Boolean ={
+    val column = ArticleTable.column
     try{
     withSQL {
       insert
         .into(ArticleTable).namedValues(
-        a.column("id") -> dto.id,
-        a.column("title") -> dto.title,
-        a.column("content") -> dto.content,
-        a.column("email") -> dto.email,
-        a.column("created_date") -> dto.createdDate
+        column.id -> dto.id,
+        column.title -> dto.title,
+        column.content -> dto.content,
+        column.email -> dto.email,
+        column.createdDate -> dto.createdDate
       )
     }.update.apply()
     true

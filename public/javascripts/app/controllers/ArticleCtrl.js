@@ -5,24 +5,41 @@ application.controller('ArticleCtrl',
         $scope.article = {};
         $scope.init = function () {
             ArticleRepo.getAll().then(
-                function(result) {
+                function (result) {
                     $scope.articles = result;
                 },
-                function() {
-                    $scope.errors.push({message: "Can not get data"});
+                function () {
+                    alert("ERROR to init" + result)
                 }
             );
         };
 
         $scope.getArticle = function (id) {
             ArticleRepo.getById(id).then(
-                function(result) {
+                function (result) {
                     $scope.article = result;
                 },
-                function() {
-                    $scope.errors.push({message: "Can not get data"});
+                function () {
+                      alert("ERROR to get Article:" + result)
                 }
             );
         };
-    }
-);
+
+        $scope.createAticle = function () {
+            var articleRequest = {
+                title: $scope.AddForm.title == undefined ? "" : $scope.AddForm.title,
+                content: $scope.AddForm.content == undefined ? "" : $scope.AddForm.content,
+                email: $scope.AddForm.email == undefined ? "" : $scope.AddForm.email,
+            }
+            ArticleRepo.store(articleRequest).then(
+                function(res){
+                    $scope.init()
+                }
+                , function(e){  //failure
+                    alert("ERROR to store: " + e)
+                }
+
+            );
+        }
+
+    });

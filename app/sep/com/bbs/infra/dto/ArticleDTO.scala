@@ -1,5 +1,5 @@
 package sep.com.bbs.infra.dto
-import sep.com.bbs.infra.util.DateTime
+
 import play.api.libs.json.{Json, JsValue}
 import scalikejdbc._
 
@@ -24,7 +24,7 @@ object ArticleDTO {
   */
 object ArticleTable extends SQLSyntaxSupport[ArticleDTO] {
   override val tableName = "article"
-
+  override val columns = Seq("id", "title", "content","email","created_date")
   def apply(a: ResultName[ArticleDTO])(rs: WrappedResultSet): ArticleDTO = {
     ArticleDTO(
       rs.string(a.id),

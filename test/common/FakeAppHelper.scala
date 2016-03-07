@@ -8,4 +8,5 @@ trait FakeAppHelper {
       "play.crypto.secret" -> "testbbs"
     )
   )
+
 }

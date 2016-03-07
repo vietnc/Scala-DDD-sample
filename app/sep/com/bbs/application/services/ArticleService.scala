@@ -1,26 +1,28 @@
 package sep.com.bbs.application.services
 
-import sep.com.bbs.domain.model.article.{ArticleRepositoryImpl, Article}
+import java.sql.SQLException
+import javax.inject.Inject
+
+import scalikejdbc.TxBoundary.Exception
+import sep.com.bbs.domain.model.article._
 import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared.ArticleID
 import sep.com.bbs.infra.dto.ArticleDTO
-
+import scala.util.{Try, Success, Failure}
 /**
  * communicate with Domain layer
  */
-object ArticleService {
+class ArticleService @Inject()(articleRepo: ArticleRepository) {
 
-  def getListArticle():List[ArticleDTO] = {
-    ArticleRepositoryImpl.resolveAll().map(ar => ArticleDomainService.getDTO(ar))
+  def getListArticle():Try[List[ArticleDTO]] = {
+    articleRepo.resolveAll().map(_.map(ArticleDomainService.getDTO))
   }
 
-  def viewArticle(id: String):Option[ArticleDTO] = {
-    ArticleRepositoryImpl.resolveById(ArticleID(id)) match{
-      case Some(ar) => Some(ArticleDomainService.getDTO(ar))
-      case _ => None
-    }
+  def viewArticle(id: String):Try[Option[ArticleDTO]] = {
+    articleRepo.resolveById(ArticleID(id)).map(_.map(ArticleDomainService.getDTO))
   }
-  def saveArticle(dto: ArticleDTO) : Boolean = {
-    ArticleRepositoryImpl.store(ArticleDomainService.loadDTO(dto))
+
+  def saveArticle(dto: ArticleDTO) : Try[Boolean] = {
+    articleRepo.store(ArticleDomainService.loadDTO(dto))
   }
 }

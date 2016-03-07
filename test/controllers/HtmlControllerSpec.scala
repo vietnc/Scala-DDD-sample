@@ -19,7 +19,7 @@ class HtmlControllerSpec extends PlaySpecification with FakeAppHelper with Resul
 
         val request = FakeRequest(GET, "/")
         val result = controller.showArticleListScreen().apply(request)
-        status(result) must beEqualTo(200)
+        status(result) must beEqualTo(OK)
         contentAsString(result) must contain ("Article list")
       }
     }

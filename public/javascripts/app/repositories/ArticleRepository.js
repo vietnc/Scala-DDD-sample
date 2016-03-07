@@ -28,10 +28,19 @@ repository.factory('ArticleRepo', function ($resource, Article) {
             .$promise
             .then(
                 function(res){ return toArticle(res)},
-                function(e) {console.log(123)}
+                function(e) {console.log("Error to get article byId " + id)}
             );
     };
-    //$resource('anken/:id', {id: id}, {'update': {method: 'PUT', isArray: false}})
+
+    repo.store = function(articleRequest){
+        return $resource('/article/add',articleRequest )
+            .save()
+            .$promise
+            .then(
+                function(res){ return console.log(res)},
+                function(e) {alert("Error to store article" + articleRequest)}
+            );
+    }
 
     return repo;
 });
