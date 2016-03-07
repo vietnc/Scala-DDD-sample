@@ -13,10 +13,6 @@ class AuthServiceSpec  extends PlaySpecification with FakeAppHelper with Mockito
   {
     val userRepo =  mock[UserRepository]
 
-    "hash md5" in {
-      val auth = new AuthService(userRepo)
-      auth.hash("123") must equalTo("202cb962ac59075b964b07152d234b70")
-    }
   }
 
 }
