@@ -2,7 +2,6 @@ package sep.com.bbs.domain.article
 import common.FakeAppHelper
 import org.specs2.mock.Mockito
 import play.api.test._
-import org.specs2._
 import sep.com.bbs.domain.model.article.{Article, ArticleRepositoryImpl}
 import sep.com.bbs.domain.service.ArticleDomainService
 import sep.com.bbs.domain.shared.ArticleID
@@ -22,7 +21,6 @@ class ArticleRepositoryImplSpec extends PlaySpecification with FakeAppHelper wit
     "resolveAll(): " in {
 
       "no article, return empty List " in {
-
         (mockDAO.findAll()) returns (List(dtoArticleTest))
         val repo = new ArticleRepositoryImpl(mockDAO)
         repo.resolveAll().get.length must equalTo(1)

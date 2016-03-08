@@ -7,7 +7,7 @@ import sep.com.bbs.infra.util.BbsLog
 
 import scala.util.parsing.json.JSONObject
 
-trait BaseController extends Controller with AuthService{
+trait BaseController extends Controller {
 
   def notFoundException(fName: String, msg: String) = {
     BbsLog.debug(s"[Warning][{fName}] not found:" +  msg)
