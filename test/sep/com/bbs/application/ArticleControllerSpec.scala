@@ -52,9 +52,10 @@ class ArticleControllerSpec extends PlaySpecification with FakeAppHelper with Re
       }
       "saveArticle - for logined user ,use his email, not posted one" in new WithApplication(fakeApp) {
 
-        val postTitle = "new Article add " + scala.util.Random.nextInt(1000)
+        val rand = scala.util.Random.nextInt(1000)
+        val postTitle = "new Article add " + rand
 
-        val sessionCookie = Session.encodeAsCookie(Session(Map("email" -> "vietngc@gmail.com")))
+        val sessionCookie = Session.encodeAsCookie(Session(Map("email" -> (rand + "_vietngc@gmail.com"))))
 
         val request = FakeRequest(POST, "/article/add").withFormUrlEncodedBody(("title",postTitle),
           ("content", "new Content"), ("email","xyz@gmail.com")).withHeaders(
@@ -67,8 +68,8 @@ class ArticleControllerSpec extends PlaySpecification with FakeAppHelper with Re
         val listResult = controller.list().apply(listRequest)
         status(listResult) must beEqualTo(OK)
 
-        (contentAsJson(listResult) ).find(
-          p => (p\\ "title").as[String] == postTitle && p \\ "email" == "vietngc@gmail.com")
+        (contentAsJson(listResult) \\ "email" ).find(
+          p => (p).as[String] ==  rand + "_vietngc@gmail.com")getOrElse("")  must not equalTo("")
       }
 
     }
