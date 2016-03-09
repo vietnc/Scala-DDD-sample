@@ -40,6 +40,7 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
 
   def saveArticle = Action{
     implicit request =>
+      val loginedEmail = request.session.get("email").getOrElse("")
 
       ArticleForm.form.bindFromRequest.fold(
         formWithErrors => {
@@ -49,8 +50,11 @@ class ArticleController @Inject() (articleService: ArticleService)  extends Base
         },
         articleData => {
           // binding success, you get the actual value. */
+          val author = if(loginedEmail != "") loginedEmail
+                       else  articleData.email
+
           val dto = ArticleDTO(
-            ID.createUID(),articleData.title, articleData.content, articleData.email , DateTime.toString(DateTime.getDate()))
+            ID.createUID(),articleData.title, articleData.content,author , DateTime.toString(DateTime.getDate()))
 
           articleService.saveArticle(dto) match{
             case Success(isOk) => Ok(Json.toJson(isOk))

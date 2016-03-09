@@ -1,2 +1,2 @@
 'use strict';
-var application = angular.module('bbs.controller', []);
+var application = angular.module('bbs.controller',  ['ngCookies']);

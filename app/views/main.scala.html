@@ -10,9 +10,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
         <script src="@routes.Assets.at("javascripts/libs/angular.min.js")" type="text/javascript"></script>
+        <script src="https://code.angularjs.org/1.4.5/angular-cookies.min.js"  type="text/javascript"> </script>
+
         <script src="@routes.Assets.at("javascripts/libs/angular-resource.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/app/controllers/Controller.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/app/controllers/LayoutCtrl.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/app/models/Model.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/app/repositories/Repository.js")" type="text/javascript"></script>
 
@@ -21,6 +24,7 @@
 
     </head>
     <body ng-app="bbs" >
+        <div class = "container" id="body" ng-controller="LayoutCtrl">
         <nav class=navbar navbar-fixed-top navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
@@ -36,7 +40,14 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/">Aticles</a></li>
                         <li><a data-toggle="modal" data-target="#addArticleModal">Add</a></li>
-                        <li><a data-toggle="modal" data-target="#loginUserModal">Login</a></li>
+                        <li>
+
+                            <a ng-show="!Common.isLogin()" data-toggle="modal" data-target="#loginUserModal">Login</a>
+                            <span  ng-show="Common.isLogin()" href="#">
+                                <b>{{UserInfo.email}} </b> | <a href="#" ng-click="Common.logout()" >Logout</a> </span>
+
+
+                        </li>
                     </ul>
                 </div>
             </div><!-- /.container -->
@@ -55,6 +66,7 @@
         </footer>
         </div>
             <!--/.container-->
+        </div>
         <!-- Boostrap -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

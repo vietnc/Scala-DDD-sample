@@ -4,6 +4,7 @@ import common.FakeAppHelper
 import controllers.HtmlController
 import org.specs2.mock.Mockito
 import play.api.inject.guice.GuiceInjectorBuilder
+import play.api.mvc.{Session, Cookies}
 import play.api.test.{FakeRequest, WithApplication, ResultExtractors, PlaySpecification}
 import play.libs.Json
 
@@ -48,6 +49,27 @@ class ArticleControllerSpec extends PlaySpecification with FakeAppHelper with Re
         val listResult = controller.list().apply(listRequest)
         status(listResult) must beEqualTo(OK)
         (contentAsJson(listResult) \\ "title").find(p => p.as[String] == postTitle)
+      }
+      "saveArticle - for logined user ,use his email, not posted one" in new WithApplication(fakeApp) {
+
+        val rand = scala.util.Random.nextInt(1000)
+        val postTitle = "new Article add " + rand
+
+        val sessionCookie = Session.encodeAsCookie(Session(Map("email" -> (rand + "_vietngc@gmail.com"))))
+
+        val request = FakeRequest(POST, "/article/add").withFormUrlEncodedBody(("title",postTitle),
+          ("content", "new Content"), ("email","xyz@gmail.com")).withHeaders(
+            play.api.http.HeaderNames.COOKIE -> Cookies.encodeCookieHeader(Seq(sessionCookie))
+          )
+
+        val result = call(controller.saveArticle, request)
+        status(result) must beEqualTo(OK)
+        val listRequest = FakeRequest(GET, "/article")
+        val listResult = controller.list().apply(listRequest)
+        status(listResult) must beEqualTo(OK)
+
+        (contentAsJson(listResult) \\ "email" ).find(
+          p => (p).as[String] ==  rand + "_vietngc@gmail.com")getOrElse("")  must not equalTo("")
       }
 
     }
