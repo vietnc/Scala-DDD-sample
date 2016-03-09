@@ -1,8 +1,9 @@
 'use strict';
-application.controller('ArticleCtrl',
-    function ($scope, ArticleRepo) {
+application.controller('ArticleCtrl',['$scope','$cookies','ArticleRepo',
+    function ($scope,$cookies, ArticleRepo) {
         $scope.articles = [];
         $scope.article = {};
+
         $scope.init = function () {
             ArticleRepo.getAll().then(
                 function (result) {
@@ -20,7 +21,7 @@ application.controller('ArticleCtrl',
                     $scope.article = result;
                 },
                 function () {
-                      alert("ERROR to get Article:" + result)
+                    alert("ERROR to get Article:" + result)
                 }
             );
         };
@@ -29,7 +30,7 @@ application.controller('ArticleCtrl',
             var articleRequest = {
                 title: $scope.AddForm.title == undefined ? "" : $scope.AddForm.title,
                 content: $scope.AddForm.content == undefined ? "" : $scope.AddForm.content,
-                email: $scope.AddForm.email == undefined ? "" : $scope.AddForm.email,
+                email: $scope.UserInfo.email == "" ? $scope.AddForm.email: $scope.UserInfo.email,
             }
             ArticleRepo.store(articleRequest).then(
                 function(res){
@@ -42,4 +43,4 @@ application.controller('ArticleCtrl',
             );
         }
 
-    });
+    }]);
