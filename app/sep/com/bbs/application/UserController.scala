@@ -1,5 +1,6 @@
 package sep.com.bbs.application
 
+import java.sql.SQLException
 import javax.inject.Inject
 
 import play.api.libs.json.Json
@@ -13,6 +14,7 @@ import sep.com.bbs.infra.util._
 
 import scala.util.{Failure, Success}
 
+case class AccountExistedException(msg: String) extends Exception(msg: String)
 
 class UserController @Inject()(authService: AuthService, userService:UserService)  extends BaseController with Secured{
 
@@ -55,19 +57,19 @@ class UserController @Inject()(authService: AuthService, userService:UserService
         signInData => {
           // binding success
           userService.checkUserExisted(signInData.email).map(
-            isExisted => if(isExisted != true){
-              val userDto = UserDTO(ID.createUID(), signInData.email, PassWord.fromRaw(signInData.password).hashed)
-              userService.saveUser(userDto)
-              Ok("saved success")
-            }else{
-              BadRequest("User existed")
-            }).getOrElse(
-              internalServerError("checkUserExisted",new Exception("Failed to check User existed"))
+            isExisted =>
+              if(isExisted != true){
+                userService.saveUser(UserDTO(ID.createUID(), signInData.email, PassWord.fromRaw(signInData.password).hashed))
+                Ok("saved new account successfully")
+            }else throw new AccountExistedException("User existed")
           )
         }
-          )
-        }
-
+      ) match{
+        case Failure(e: SQLException) => InternalServerError( "SQL Error: " + e.getMessage)
+        case Failure(e: AccountExistedException) => BadRequest(e.getMessage)
+        case Failure(e: Exception) => InternalServerError("Unknow Error: " + e.getMessage)
+      }
+    }
 
 }
 
