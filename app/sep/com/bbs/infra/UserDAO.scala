@@ -24,8 +24,22 @@ class UserDAO {
     List()
   }
 
-  def save(dto: ArticleDTO)(implicit session: DBSession = AutoSession): Boolean ={
-    false
+  def save(dto: UserDTO)(implicit session: DBSession = AutoSession): Boolean ={
+    val column = UserTable.column
+    try{
+      withSQL {
+        insert
+          .into(UserTable).namedValues(
+          column.id -> dto.id,
+          column.email -> dto.email,
+          column.password -> dto.password
+        )
+      }.update.apply()
+      true
+    }catch {
+      case e: Exception => Logger.error("[SQLException][UserDAO.save]: " + e.getMessage)
+        false
+    }
   }
 
 }

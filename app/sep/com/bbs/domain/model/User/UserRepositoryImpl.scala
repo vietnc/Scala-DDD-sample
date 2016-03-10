@@ -21,7 +21,7 @@ class UserRepositoryImpl @Inject()(userDAO: UserDAO)extends UserRepository{
     }
 
     def store(user: User): Try[Boolean] = Try {
-      true
+      userDAO.save(UserDomainService.getDTO(user))
     }
 
 
