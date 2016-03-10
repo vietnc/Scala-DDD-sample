@@ -1,5 +1,6 @@
 package sep.com.bbs.infra
 
+import java.sql.SQLException
 import javax.inject._
 
 import play.api.Logger
@@ -44,8 +45,9 @@ case class ArticleDAO @Inject()(){
     }.update.apply()
     true
     }catch {
-      case e: Exception => Logger.error("[SQLException][ArticleDAO.save]: " + e.getMessage)
-        false
+      case e: Exception =>
+        Logger.error("[SQLException][ArticleDAO.save]: " + e.getMessage)
+        throw new SQLException("SQL inserted fail:" + e.getMessage)
     }
   }
 

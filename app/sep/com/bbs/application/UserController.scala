@@ -56,17 +56,14 @@ class UserController @Inject()(authService: AuthService, userService:UserService
           // binding success
           userService.checkUserExisted(signInData.email).map(
             isExisted => if(isExisted != true){
-
               val userDto = UserDTO(ID.createUID(), signInData.email, PassWord.fromRaw(signInData.password).hashed)
-              userService.saveUser(userDto) match{
-                case Success(true) =>
-                  Ok("Save user successfully")
-                case _ =>
-                  internalServerError("userService.saveUser", new Exception("Failed to save user" ))
-              }
+              userService.saveUser(userDto)
+              Ok("saved success")
             }else{
               BadRequest("User existed")
-            }).getOrElse(internalServerError("checkUserExisted",new Exception("Failed to check User existed")))
+            }).getOrElse(
+              internalServerError("checkUserExisted",new Exception("Failed to check User existed"))
+          )
         }
           )
         }

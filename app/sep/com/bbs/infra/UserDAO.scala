@@ -1,5 +1,7 @@
 package sep.com.bbs.infra
 
+import java.sql.SQLException
+
 import play.api.Logger
 import scalikejdbc._
 import sep.com.bbs.infra.dto.{ArticleTable, ArticleDTO, UserDTO, UserTable}
@@ -37,8 +39,9 @@ class UserDAO {
       }.update.apply()
       true
     }catch {
-      case e: Exception => Logger.error("[SQLException][UserDAO.save]: " + e.getMessage)
-        false
+      case e: Exception
+      => Logger.error("[SQLException][UserDAO.save]: " + e.getMessage)
+         throw new SQLException("SQL inserted fail:" + e.getMessage)
     }
   }
 
