@@ -5,6 +5,7 @@ import org.specs2.specification.BeforeAll
 import scalikejdbc.specs2.mutable.AutoRollback
 import scalikejdbc.{DBSession, _}
 import sep.com.bbs.domain.shared.ID
+import sep.com.bbs.infra.dto.UserDTO
 import sep.com.bbs.infra.util.{BbsSecure}
 
 class UserDAOSpec extends mockDbSpec with BeforeAll with DBSetting {
@@ -27,6 +28,13 @@ class UserDAOSpec extends mockDbSpec with BeforeAll with DBSetting {
       "findByEmail(email) should return None with incorrect email" in new AutoRollbackWithFixture {
         val userObj = userDAO.findByEmail("vietngcxxx@gmail.com")
         userObj.getOrElse("NotFound") must equalTo("NotFound")
+      }
+      "save(dto) should save user to db" in new AutoRollbackWithFixture {
+        val newDTO = UserDTO(ID.createUID,"vietngc2@gmail.com",BbsSecure.hash("123"))
+        val ret = userDAO.save(newDTO)
+        ret must equalTo(true)
+        val userInDb = userDAO.findByEmail("vietngc2@gmail.com")
+        userInDb.getOrElse(false) must not equalTo(false)
       }
     }
   }

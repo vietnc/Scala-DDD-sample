@@ -4,7 +4,7 @@ import common.FakeAppHelper
 import org.specs2.mock.Mockito
 import play.api.inject.guice.GuiceInjectorBuilder
 import play.api.test.{FakeRequest, PlaySpecification, ResultExtractors, WithApplication}
-import sep.com.bbs.application.services.AuthService
+import sep.com.bbs.application.services.{UserService, AuthService}
 import scala.util.{Try, Success, Failure}
 
 class UserControllerSpec extends PlaySpecification with FakeAppHelper with ResultExtractors with Mockito {
@@ -12,7 +12,7 @@ class UserControllerSpec extends PlaySpecification with FakeAppHelper with Resul
     val guice = new GuiceInjectorBuilder().build()
     val controller = guice.instanceOf[UserController]
     val authService = mock[AuthService]
-
+    val userService = mock[UserService]
     "UserController " should {
       "login()" in {
         " user and pass 's correct " in new WithApplication(fakeApp) {
@@ -37,7 +37,38 @@ class UserControllerSpec extends PlaySpecification with FakeAppHelper with Resul
             .withFormUrlEncodedBody(("email","vietngc2@gmail.com"),("password","123"))
           authService.validate("vietngc2@gmail.com","123") returns Failure(new Exception("Db not existed"))
 
-          val controller =  new UserController(authService)
+          val controller =  new UserController(authService, userService)
+          val result = call(controller.login, request)
+
+          status(result) must beEqualTo(INTERNAL_SERVER_ERROR)
+          contentAsString(result) must contain("exception")
+        }
+      }
+
+      "signin()" in {
+        " with new user " in new WithApplication(fakeApp) {
+
+          val request = FakeRequest(POST, "/user/signin")
+            .withFormUrlEncodedBody(("email","rand3sw@gmail.com"),("password","123"))
+
+          val result = call(controller.signin, request)
+          status(result) must beEqualTo(OK)
+        }
+        " user email existed " in new WithApplication(fakeApp) {
+
+          val request = FakeRequest(POST, "/user/signin")
+            .withFormUrlEncodedBody(("email","vietngc@gmail.com"),("password","123"))
+
+          val result = call(controller.login, request)
+          status(result) must beEqualTo(BAD_REQUEST)
+        }
+        "there are exception internal" in new WithApplication(fakeApp) {
+
+          val request = FakeRequest(POST, "/user/signin")
+            .withFormUrlEncodedBody(("email","vietngc2@gmail.com"),("password","123"))
+          userService.checkUserExisted("vietngc@gmail.com") returns Failure(new Exception("Db Error"))
+
+          val controller =  new UserController(authService, userService)
           val result = call(controller.login, request)
 
           status(result) must beEqualTo(INTERNAL_SERVER_ERROR)
