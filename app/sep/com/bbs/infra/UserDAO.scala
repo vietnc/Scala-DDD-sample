@@ -37,11 +37,12 @@ class UserDAO {
           column.password -> dto.password
         )
       }.update.apply()
+
       true
     }catch {
       case e: Exception
       => Logger.error("[SQLException][UserDAO.save]: " + e.getMessage)
-         throw new SQLException("SQL inserted fail:" + e.getMessage)
+         throw new SQLException("SQLERROR:" + e.getMessage)
     }
   }
 

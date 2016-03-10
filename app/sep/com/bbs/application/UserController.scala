@@ -43,7 +43,7 @@ class UserController @Inject()(authService: AuthService, userService:UserService
         }
       }
     )
-    }
+  }
 
   def signin() = Action{
     implicit request =>
@@ -59,16 +59,19 @@ class UserController @Inject()(authService: AuthService, userService:UserService
           userService.checkUserExisted(signInData.email).map(
             isExisted =>
               if(isExisted != true){
-                userService.saveUser(UserDTO(ID.createUID(), signInData.email, PassWord.fromRaw(signInData.password).hashed))
-                Ok("saved new account successfully")
-            }else throw new AccountExistedException("User existed")
+                userService.saveUser(UserDTO(ID.createUID(), signInData.email, PassWord.fromRaw(signInData.password).hashed)) match {
+                case Success(true) => Ok("saved new account successfully")
+                case Failure(e: SQLException) => InternalServerError( "SQL Error: " + e.getMessage)
+                case Failure(e: AccountExistedException) => BadRequest("Exception:" + e.getMessage)
+                case _ => InternalServerError("Unknow Error ")
+                }
+            }else BadRequest("User existed")
+
+          ).getOrElse(
+            InternalServerError("Failed to checkUserExisted")
           )
         }
-      ) match{
-        case Failure(e: SQLException) => InternalServerError( "SQL Error: " + e.getMessage)
-        case Failure(e: AccountExistedException) => BadRequest(e.getMessage)
-        case Failure(e: Exception) => InternalServerError("Unknow Error: " + e.getMessage)
-      }
+      )
     }
 
 }
