@@ -13,10 +13,24 @@ application.controller('UserCtrl',function($scope){
                     $scope.$apply();
                     alert("Login Successfully ! " );
                 },
-                error: function(e){
-                    alert ("Failed to login: " + e.getMessage())
+                error: function(req){
+                    alert ("Failed to login: " + req.responseText)
                 }
             });
+    }
+    $scope.summitSignin = function(){
+
+        $.ajax({
+            url: "/user/signin",
+            type: "POST",
+            data: $(".SigninForm").serialize(),
+            success: function(data){
+                alert("User Account created!" );
+            },
+            error: function(req){
+                alert ("Failed to SignIn: " + req.responseText)
+            }
+        });
     }
 }
 )
