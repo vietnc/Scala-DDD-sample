@@ -1,0 +1,1 @@
+# Scala-DDD-sample
