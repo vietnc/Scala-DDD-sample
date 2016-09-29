@@ -7,11 +7,11 @@ GET     /                           @controllers.HtmlController.showArticleListS
 GET     /article/view/:id           @controllers.HtmlController.viewArticle(id: String)
 GET     /signin                     @controllers.HtmlController.signIn
 
-GET     /article                    @sep.com.bbs.application.ArticleController.list()
-GET     /article/:id                @sep.com.bbs.application.ArticleController.getById(id: String)
-POST     /article/add               @sep.com.bbs.application.ArticleController.saveArticle()
-POST     /user/signin               @sep.com.bbs.application.UserController.signin()
+GET     /article                    @org.com.bbs.application.ArticleController.list()
+GET     /article/:id                @org.com.bbs.application.ArticleController.getById(id: String)
+POST     /article/add               @org.com.bbs.application.ArticleController.saveArticle
+POST     /user/signin               @org.com.bbs.application.UserController.signin()
 
-POST    /user/login                 @sep.com.bbs.application.UserController.login()
+POST    /user/login                 @org.com.bbs.application.UserController.login()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

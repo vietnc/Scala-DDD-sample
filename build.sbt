@@ -1,10 +1,12 @@
-name := "BBS2"
+name := "BBS"
 
 version := "1.0"
 
-lazy val `bbs2` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `bbs` = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
+
+resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(
   jdbc,

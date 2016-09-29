@@ -1,3 +1,4 @@
+# --- !Ups
 CREATE TABLE article (
   id varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   title varchar(225) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -6,3 +7,6 @@ CREATE TABLE article (
   created_date datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+# --- !Downs
+
+DROP TABLE article;
